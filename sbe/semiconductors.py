@@ -95,6 +95,52 @@ class SemicondYAML(object):
         self.e_P = 28.8  # eV
 
 
+class SimpleSemiconductor(object):
+    """
+    The class is a data structure for the material parameters of a semiconductor
+
+    Parameters are taken from
+    [I. Vurgaftman, J. R. Meyer, and L. R. Ram-Mohan, J. Appl. Phys., 89 (11), 2001]
+    """
+
+    def __init__(self, tempr=0, tempr_dep='varshni'):
+
+        self.dim = 3
+
+        self.tempr_dep = tempr_dep
+        self.tempr = tempr
+
+        # --------------- band structure parameters ---------------
+
+        self.Eg = 1.519 * const.e  # nominal band gap
+        self.Eso = 0.0 * const.e  # nominal band gap
+
+        self.gamma1 = 2.0
+        self.gamma2 = 2.0
+        self.gamma3 = 2.0
+        self.gamma = 0.5 * (self.gamma2 + self.gamma2)
+
+        self.me = 1.0 * const.m0  # electrons effective mass
+        self.mhh = 1.0 * const.m0  # holes effective mass
+        self.mlh = 0.0  # holes effective mass
+        self.mso = 0.0 * const.m0  # holes effective mass
+        self.mh = (self.mhh, self.mlh, self.mso)
+
+        # ----------------- dielectric screening ------------------
+
+        self.eps = 12.93  # permitivity
+        self.n_reff = 3.61  # refraction index
+
+        # ------------------- scaling constants -------------------
+
+        self.mr = self.me / (self.mhh + self.me) * self.mhh
+        self.a_0 = const.h / const.e * const.eps0 * self.eps * const.h / const.e / self.mr * 4 * const.pi
+        self.E_0 = (const.e / const.eps0 / self.eps) * (const.e / (2 * self.a_0)) / const.e_Ry
+
+
+
+        self.e_P = 28.8  # eV
+
 class GaAs(object):
     """
     The class is a data structure for the material parameters of a semiconductor
@@ -160,7 +206,7 @@ class GaAs(object):
         # ------------ energy of momentum matrix element -----------
         # ----------- between conduction and valence bands ---------
 
-        self.e_P = 28.8  # eV
+        self.e_P = 28.8  # eV # for transition dipole moment
 
 
 class Tc(object):
