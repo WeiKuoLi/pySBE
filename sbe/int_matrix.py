@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.integrate import simps
+from scipy.integrate import simpson
 from sbe.constants import *
 
 
@@ -126,7 +126,7 @@ def int_matrix_2D(k, eps):
             q = np.sqrt(k[j1] ** 2 + k[j2] ** 2 - 2.0 * k[j1] * k[j2] * np.cos(phi[start:]))
             epss = 1.0
             integrand = epss * e ** 2 / (2.0 * ((2*np.pi) ** 2) * eps * eps0 * q)
-            V[j1][j2] = k[j2] * simps(integrand, dx=np.abs(phi[2] - phi[1]))
+            V[j1][j2] = k[j2] * simpson(integrand, dx=np.abs(phi[2] - phi[1]))
 
     V[0, 0] = 0.0
 
@@ -160,7 +160,7 @@ def int_matrix_3D(k, eps):
             q = np.sqrt(k[j1] ** 2 + k[j2] ** 2 - 2.0 * k[j1] * k[j2] * np.cos(theta[start:]))
             epss = 1.0
             integrand = 2 * np.pi * np.sin(theta[start:]) * epss * e ** 2 / (((2*np.pi) ** 3) * eps * eps0 * (q ** 2))
-            V[j1][j2] = k[j2] * k[j2] * simps(integrand, dx=np.abs(theta[2] - theta[1]))
+            V[j1][j2] = k[j2] * k[j2] * simpson(integrand, dx=np.abs(theta[2] - theta[1]))
 
     V[0, 0] = 0.0
 
@@ -182,7 +182,7 @@ def exchange(k, ne, nh, V):
     exce = np.zeros(l_k)
 
     for j in range(l_k):
-        exce[j] = simps(V[j, :] * (ne + nh), dx=stk)
+        exce[j] = simpson(V[j, :] * (ne + nh), dx=stk)
 
     return exce
 

@@ -11,6 +11,7 @@ setup(name='pySBE',
       license='MIT',
       packages=['apps', 'scripts', 'sbe'],
       ext_modules = [Extension( 'sbe.P_loop', ['src/P_loop.f90'] ), \
-                     Extension( 'sbe.fft_loop', ['src/fft_loop.f90'] ),],
+                     Extension( 'sbe.fft_loop', ['src/fft_loop.f90'] ),\
+                     Extension( 'sbe.oscillators', ['src/oscillators.f90'] )],
       zip_safe=False
       )
