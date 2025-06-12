@@ -14,8 +14,8 @@ damp:       0.003    # dephasing factor in eV
 
 # ---------------- k grids ------------------
 
-l_k:         300    # length of k array
-k_max:    3.0e+9    # k-vector cutoff
+l_k:         140    # length of k array
+k_max:    1.4e+9    # k-vector cutoff
 
 # ------------- frequency array -------------
 
