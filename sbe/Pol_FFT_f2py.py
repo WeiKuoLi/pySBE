@@ -8,6 +8,10 @@ import sbe.fft_loop as fft_f2py_loop
 import sbe.oscillators as osc
 
 
+
+
+
+
 def polarization(fff, dim, params, bs, Ef_h, Ef_e, Tempr, V, damp, E_field, pulse_widths, pulse_delay, pulse_amp, e_phot, debug):
 
     """ Calculates the evolution of polarization and charge densities with time
@@ -247,13 +251,13 @@ def polarization_app(fff, dim, params, bs, Ef_h, Ef_e, Tempr, V, damp, E_field, 
         from bokeh.layouts import layout
         from bokeh.palettes import PiYG, Magma, Spectral
         ax6 = figure(x_axis_label='Time (ps)', y_axis_label='Pump signal (a.u.)',
-                     plot_width=370, plot_height=190)
+                    width=370, height=190)
         ax6.line(t / 1e-12, np.real(E_ft) / np.max(np.abs(E_ft)))
         ax6.line(t / 1e-12, np.imag(E_ft) / np.max(np.abs(E_ft)))
         ax6.toolbar.logo = None
 
         ax4 = figure(x_axis_label='Time (ps)', y_axis_label='Polarization (a.u.)',
-                     plot_width=370, plot_height=190)
+                     width=370, height=190)
         ax4.line(t / 1e-12, np.real(P) / np.max(np.abs(P)))
         ax4.line(t / 1e-12, np.imag(P) / np.max(np.abs(P)))
         ax4.toolbar.logo = None
@@ -280,18 +284,24 @@ def polarization_app(fff, dim, params, bs, Ef_h, Ef_e, Tempr, V, damp, E_field, 
         ax1.toolbar.logo = None
 
         ax5 = figure(x_axis_label='Scaled energy (E-Eg)/Eb (a.u.)', y_axis_label='Absorption (a.u.)',
-                     plot_width=370, plot_height=190)
+                    width=370, height=190)
         ax5.line(fff * const.h / const.e / 0.0042, PSr / np.max(PSr))
         ax5.toolbar.logo = None
 
         fig = layout([[ax1, ax2, ax3, [ax6, ax4, ax5]]], width=1150, height=770)
 
-        from bokeh.document import Document
+        #from bokeh.document import Document
+        from bokeh.embed import json_item
+        
         import json
 
         # doc = Document()
-        # doc.add_root(fig)
-        doc_json = fig.to_json(True)
+        ## doc.add_root(fig)
+        #doc_json = fig.to_json(True)
+        
+        # Serialize individual figures
+        doc_json = json_item(fig.children[0])  # Example: Access the first figure in the layout
+        
         with open('data.txt', 'w') as outfile:
             json.dump(doc_json, outfile)
 

@@ -25,7 +25,7 @@ def ksi0(energy, omega, nh, ne, damp):
     """
 
     if isinstance(energy, np.ndarray) or isinstance(energy, list):
-        ans = np.zeros((len(energy), len(omega)), dtype=np.complex)
+        ans = np.zeros((len(energy), len(omega)), dtype=np.complex128)
         for j, item in enumerate(energy):
             ans[j, :] = -(1.0 - ne - nh) / (energy[j] + 1j * damp - h * omega)
         return ans
@@ -35,7 +35,7 @@ def ksi0(energy, omega, nh, ne, damp):
 
 def vertex(energy, omega, nh, ne, damp, mu, V, measure):
 
-    ans = np.zeros((len(energy), len(omega)), dtype=np.complex)
+    ans = np.zeros((len(energy), len(omega)), dtype=np.complex128)
 
     for j, en in enumerate(energy):
 

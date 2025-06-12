@@ -1,0 +1,22 @@
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Compiled Python/extension files
+*.so
+__pycache__/
+*.pyc
+*.pyo
+
+# Data files (if they are outputs or not version-controlled)
+*.npy
+*.txt
+
+# Ignore specific egg-info dir (if not already covered)
+pySBE.egg-info/
+
+# Ignore compiled shared libs in subdirectories
+sbe/*.so
+sbe/__pycache__/
+
